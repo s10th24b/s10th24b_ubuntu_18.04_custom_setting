@@ -1,0 +1,398 @@
+#[-1] : for Ubuntu 18.04 LTS
+
+#[0] BASIC UPGRADE
+sudo apt-get update && sudo apt-get upgrade -y 
+sudo apt-get install gcc g++ openjdk-8-jdk vim terminator -y
+sudo apt-get install vim-gnome -y
+spd-say done
+#[1] INSTALL ZSH and oh-my-zsh
+sudo apt-get install zsh curl git -y
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+#[2] INSTALL ZSH SYNTAX HIGHLIGHTING
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+#[3] INSTALL ZSH AUTOSUGGESTIONS
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+#[m4] ADD ~./ZSHRC FILE AS BELOW 
+ZSH_THEME="amuse"
+plugins=(
+git
+zsh-syntax-highlighting
+zsh-autosuggestions
+)
+
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+alias install="sudo apt-get install"
+alias updnupg="sudo apt-get update && sudo apt-get upgrade"
+alias py="python3"
+
+
+
+
+#[m5] UPDATE ~/.VIMRC FILE AS BELOW
+" Basic Settings
+set number "show line number
+" set relativenumber "show relative number
+set hlsearch "highlight search
+set ignorecase "ignore case when searching
+" set smartcase "consider case when searching
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set cursorline "highlight current cursor line
+set history=256 "history buffer size
+"set paste "paste mode
+"
+" syntax-highlighting
+if has("syntax")
+    syntax on
+endif
+
+" locate cursor at last-worked line.
+au BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ exe "norm g`\"" |
+\ endif
+
+ 
+" Key Settings
+" Enter paste mode. Comfortable when pasting system clipboard into vim
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+let mapleader = ","
+
+" move to previous tab
+nnoremap <Leader>q :bp<CR>
+
+" move to next tab
+nnoremap <Leader>w :bn<CR>
+
+" close current tab
+nnoremap <Leader>C :bd<CR>
+
+" close current tab
+nnoremap <Leader>C :bd<CR>
+
+" use primary(=copy-on-select) (star means Select)
+noremap <Leader>y "*y<CR>
+noremap <Leader>p "*p<CR>
+" use clipboard  (=usually ^C and ^V) (ctrl PLUS c)
+noremap <Leader>Y "+y<CR>
+noremap <Leader>P "+p<CR>
+
+" show NERDTree
+nnoremap <Leader>nt :NERDTree<CR>
+
+" toggle Tlist
+nnoremap <Leader>tl :TlistToggle<CR>
+nmap <F8> :TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
+
+" vim-jupyter integration
+autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
+autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
+"autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" Below are my custom command
+set shell=/usr/bin/zsh
+autocmd Filetype python nmap <silent><Leader>j :!p2j %
+"command py_to_ipynb :call system("py_to_ipynb %")
+" Above are my custom command
+"""""""""""""""""""""""""""""""""""""""""""""""""
+ 
+" Key Setting - resize windows
+nnoremap <silent> <Leader>= :exe "resize +3"<CR>
+nnoremap <silent> <Leader>- :exe "resize -3"<CR>
+nnoremap <silent> <Leader>] :exe "vertical resize +8"<CR>
+nnoremap <silent> <Leader>[ :exe "vertical resize -8"<CR>
+ 
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>_ :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <Leader>} :exe "vertical resize " . (winheight(0) *2/3)<CR>
+ 
+" Vundle
+set nocompatible              " be iMproved, required
+filetype off                  " required
+ 
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+ 
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+ 
+" Keep Plugin commands between vundle#begin/end.
+ 
+" vim-airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'sjl/badwolf'
+Plugin 'taglist-plus'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'itchyny/calendar.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'Yggdroot/indentLine'
+Plugin 'chrisbra/csv.vim'
+Plugin 'tpope/vim-eunuch'
+Plugin 'szymonmaszke/vimpyter'
+ 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+"Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+" Declare the list of plugins.
+Plug 'thaerkh/vim-indentguides' 
+Plug 'michaeljsmith/vim-indent-object'
+
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+ " for vim-airline
+ let g:airline#extensions#tabline#enabled = 1 " turn on buffer list
+ let g:airline_theme='badwolf'
+ let g:airline_powerline_fonts = 1
+ set laststatus=2 " turn on bottom bar
+ set t_Co=256
+
+ " for YouCompleteMe
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-j>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
+
+" for Plugin vim theme
+" " Make the gutters darker than the background.
+let g:badwolf_darkgutter = 1
+" Make the tab line darker than the background.
+let g:badwolf_tabline = 0
+
+" Make the tab line the same color as the background.
+"let g:badwolf_tabline = 1
+
+"" Make the tab line lighter than the background.
+"let g:badwolf_tabline = 2
+
+"" Make the tab line much lighter than the background.
+"let g:badwolf_tabline = 3
+set termguicolors
+set background=dark
+"set background=light
+colorscheme badwolf
+
+
+#[m6] UPDATE PLUGINS AND INSTALL CTAGS FOR TAGLIST
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+sudo apt-get install cmake -y
+sudo apt-get install ctags -y
+spd-say done
+
+source ~/.vimrc
+
+in vim, use command below
+:PluginInstall
+:PluginUpdate
+
+#[m7] INSTALL POWERLINE FONTS AND PASTE BELOW COMMANDS
+sudo apt-get install fonts-powerline -y
+# clone
+git clone https://github.com/powerline/fonts.git --depth=1
+# # install
+cd fonts
+./install.sh
+# clean-up a bit
+cd ..
+rm -rf fonts
+spd-say done
+
+
+#[m8] UPDATE ~/.config/terminator/config file AS BELOW  (You can Ignore this)
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  inactive_color_offset = 0.89
+  title_inactive_bg_color = "#111314"
+  title_inactive_fg_color = "#b7bbb7"
+  title_receive_bg_color = "#5d7f90"
+  title_receive_fg_color = "#b7bbb7"
+  title_transmit_bg_color = "#111314"
+  title_transmit_fg_color = "#b7bbb7"
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      profile = default
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
+    background_color = "#282828"
+    background_darkness = 0.94
+    background_type = transparent
+    cursor_color = "#7b7b7b"
+    font = D2Coding 12
+    foreground_color = "#ebdbb2"
+    login_shell = True
+    palette = "#282828:#cc241d:#98971a:#d79921:#458588:#b16286:#689d6a:#a89984:#928374:#fb4934:#b8bb26:#fabd2f:#83a598:#d3869b:#8ec07c:#ebdbb2"
+    scrollback_lines = 5000
+    urgent_bell = True
+    use_system_font = False
+
+#[m9] install vim-plug plugin manager
+
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+
+#[m9-1]
+sudo vim and :PlugInstall #in vim
+#:IndentGuidesToggle can toggle the setting.
+
+#[m10] tweak-tool and numix-icon
+sudo apt-get install gnome-tweak-tool -y
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get install numix-icon-theme-circle -y
+sudo add-apt-repository ppa:system76/pop sudo apt update
+sudo apt install pop-theme 
+# install this extension via firefox or ubuntu software center from https://extensions.gnome.org/extension/19/user-themes
+spd-say done
+
+#[m11] touchpad inactivate
+https://blog.naver.com/stagefright/221026768470
+
+
+#[m12] install google chrome 
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update
+sudo apt-get install google-chrome-stable
+sudo rm -rf /etc/apt/sources.list.d/google.list
+spd-say done
+
+#[m13] Google-Calendar
+sudo add-apt-repository ppa:atareao/atareao
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get install calendar-indicator -y
+spd-say done
+
+#[m14] YouCompleteMe settings
+sudo apt-get install build-essential python3-dev -y
+cd ~/.vim/bundle/YouCompleteMe
+sudo python3 install.py --clangd-completer --java-completer
+spd-say done
+
+#[m15] Nouveau.modeset=0 settings
+sudo vi /etc/default/grub
+#modify GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nouveau.modeset=0"
+sudo update-grub
+spd-say done
+
+
+#[m16] YouCompleteMe settings
+#Reboot and open software center and install Workspace Matrix
+
+#[m17] Install Jupyter
+pip3 install --user jupyter
+pip3 install --user ipython
+pip3 install --user nbconvert
+
+
+
+#[m18] Jupyter-vim-binding extension download
+https://github.com/ipython-contrib/jupyter_contrib_nbextensions#installation
+https://github.com/lambdalisue/jupyter-vim-binding
+https://github.com/lambdalisue/jupyter-vim-binding/issues/92 #fix white bg issue
+
+#[m19] Vim - Jupyter Integration Plugin : vimpyter
+https://github.com/szymonmaszke/vimpyter (you've also installed this)
+pip3 install notedown
+notedown --version
+
+#[m20] paste below lines to tail of .zshrc file
+###############################
+alias install="sudo apt-get install"
+alias updnupg="sudo apt-get update && sudo apt-get upgrade"
+alias py="python3"
+alias kt="kotlin"
+alias saydone="spd-say -t female1 'jobs done'"
+alias ua="sudo ufw allow"
+alias uaf="sudo ufw allow from"
+alias p3install="pip3 install --user"
+#function py_to_ipynb()
+#{ 
+    #local my_file=`basename "$1"` # get full name of argument and strip the path
+    #local my_extension="${my_file##*.}"
+    #local my_filename="${my_file%.*}"
+    #local my_ipynb="${my_filename}.ipynb_temp"
+    #echo "file: ${my_file}"
+    #echo "filename: ${my_filename}"
+    #echo "filename_to_ipynb: ${my_ipynb}"
+    #cat ${my_file} >> ${my_ipynb} #do not overwrite
+    #sed -i '1 i\```{.python.input}' ${my_ipynb}
+    #echo '```' >> ${my_ipynb}
+    #mv ${my_ipynb} ${my_filename}.ipynb
+    #vi ${my_ipynb}
+#}
+function ipynb_to_py()
+{jupyter nbconvert --to python $1}
+function repo_automake_func()
+{
+#Set your GitHub username and email 
+#Assigning repository name
+#Get directory name as repository name by default
+#Modify it as you like
+    repo_name=$1
+    dir_name=`basename $(pwd)`
+    if [ "$repo_name" = "" ]; then
+      repo_name=$dir_name
+    fi
+# Enther github account info.
+    local GITHUB_USERNAME="s10th24b" 
+    local GITHUB_EMAIL="allen246@naver.com" 
+    git config --global user.name "${GITHUB_USERNAME}" 
+    git config --global user.email "${GITHUB_EMAIL}" 
+    git config --global credential.helper cache 
+    git config --global credential.helper 'cache --timeout=3600' 
+    echo "MAKE REPO IN GITHUB"
+    curl -u "${GITHUB_USERNAME}" https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}"
+    echo "[Info] Creating Local Git Repository ...."
+    git init
+    git add . 
+# Default commit message is 'Init'
+# Modify it as you like
+    git commit -m "Init"
+    git remote add origin https://github.com/${GITHUB_USERNAME}/$repo_name.git
+    echo "[Info] Pushing local repository master branch to Github origin/master branch..."
+    git push -u origin master
+}
+################################
+
+#[m21] install p2j
+p3install --user p2j
+
