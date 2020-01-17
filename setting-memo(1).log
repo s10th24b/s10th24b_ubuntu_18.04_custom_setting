@@ -393,6 +393,10 @@ function repo_automake_func()
 }
 ################################
 
-#[m21] install p2j
+#[m21] install p2j 
 p3install --user p2j
+# p2j convert python file to ipynb jupyter notebook
 
+#[m21] install ngrok
+snap install ngrok
+# ngrok enable you to connect other network without modify network preferences such as port forwarding
