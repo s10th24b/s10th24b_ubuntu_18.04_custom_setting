@@ -42,7 +42,8 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set cursorline "highlight current cursor line
-set history=256 "history buffer size
+set history=256 "history buffer in .viminfo
+"set nobackup
 "set paste "paste mode
 "
 " syntax-highlighting
@@ -58,36 +59,39 @@ au BufReadPost *
 
  
 " Key Settings
+"nnoremap <F1> :set invpaste paste?<CR>
+"nnoremap <F3> :set invpaste paste?<CR>
+"nnoremap <F4> :set invpaste paste?<CR>
+"nnoremap <F5> :set invpaste paste?<CR>
+"nnoremap <F6> :set invpaste paste?<CR>
 " Enter paste mode. Comfortable when pasting system clipboard into vim
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 let mapleader = ","
 
 " move to previous tab
-nnoremap <Leader>q :bp<CR>
+nnoremap <silent><Leader>q :bp<CR>
 
 " move to next tab
-nnoremap <Leader>w :bn<CR>
+nnoremap <silent><Leader>w :bn<CR>
 
 " close current tab
-nnoremap <Leader>C :bd<CR>
-
-" close current tab
-nnoremap <Leader>C :bd<CR>
+nnoremap <silent><Leader>C :bd<CR>
 
 " use primary(=copy-on-select) (star means Select)
-noremap <Leader>y "*y<CR>
-noremap <Leader>p "*p<CR>
+noremap <silent><Leader>y "*y
+noremap <silent><Leader>p "*p<CR>
 " use clipboard  (=usually ^C and ^V) (ctrl PLUS c)
-noremap <Leader>Y "+y<CR>
-noremap <Leader>P "+p<CR>
+noremap <silent><Leader>Y "+y
+noremap <silent><Leader>P "+p<CR>
 
 " show NERDTree
-nnoremap <Leader>nt :NERDTree<CR>
+nnoremap <silent><Leader>nt :NERDTree<CR>
 
-" toggle Tlist
+" toggle Tlist & TagBar
 nnoremap <Leader>tl :TlistToggle<CR>
-nmap <F8> :TlistToggle<CR>
+nnoremap <Leader>tb :TagbarToggle<CR>
+"nmap <F8> :TagbarToggle<CR>
 let Tlist_Use_Right_Window = 1
 
 " vim-jupyter integration
@@ -98,7 +102,7 @@ autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 " Below are my custom command
 set shell=/usr/bin/zsh
-autocmd Filetype python nmap <silent><Leader>j :!p2j %
+autocmd Filetype python nmap <silent><Leader>j :!p2j % -o<CR>
 "command py_to_ipynb :call system("py_to_ipynb %")
 " Above are my custom command
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -138,7 +142,7 @@ Plugin 'taglist-plus'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter' "<Leader>c<Space> by default
 Plugin 'scrooloose/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'itchyny/calendar.vim'
@@ -169,6 +173,9 @@ call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'thaerkh/vim-indentguides' 
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+"Plug 'kassio/neoterm' "neovim terminal tab
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -202,6 +209,85 @@ set termguicolors
 set background=dark
 "set background=light
 colorscheme badwolf
+
+" for NVIM
+"""""""""""""NVIM""""""""""""""""
+set mouse=c " disable mouse
+
+" For Terminal buffer
+"set nocompatible
+"filetype off
+"let &runtimepath.=',~/.vim/bundle/neoterm'
+"filetype plugin on
+nnoremap <leader>tt :bel sp \| resize 10 \| terminal<CR>
+" <leader>b = breakpoint with pdb
+
+" ignore sub tabs when navigating buffer with :bp,:bn (Terminal tab, pymode_lint qf)
+if has('nvim')
+    autocmd TermOpen * if bufwinnr('') > 0 | setlocal nobuflisted | endif
+    "autocmd TermOpen * setlocal nobuflisted
+    "reference: https://stackoverflow.com/questions/28613190/exclude-quickfix-buffer-from-bnext-bprevious
+    augroup qf
+        autocmd!
+        autocmd FileType qf set nobuflisted
+    augroup END
+else 
+    if exists('##TerminalOpen')
+        autocmd TerminalOpen * if bufwinnr('') > 0 | setlocal nobuflisted | endif
+        "autocmd TerminalOpen * setlocal nobuflisted
+        augroup qf
+            autocmd!
+            autocmd FileType qf set nobuflisted
+        augroup END
+    endif
+endif
+
+if has('nvim')
+    :tnoremap <A-h> <C-\><C-n><C-w>h
+    :tnoremap <A-j> <C-\><C-n><C-w>j
+    :tnoremap <A-k> <C-\><C-n><C-w>k
+    :tnoremap <A-l> <C-\><C-n><C-w>l
+endif
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" For python-mode
+let g:pymode_debug = 1
+" ignore line warnings
+"let g:syntastic_quiet_messages = { 'level': 'warnings' } " silences all msgs that are NOT errors
+"let g:syntastic_quiet_messages = { 'regex': 'E501' } " silences all msgs that are NOT errors
+let g:pymode_lint_ignore=['E501', 'E261', 'E231', 'E116', 'W'] " ignore warnings
+"let g:pymode_lint_ignore=['E501', 'E231', 'W'] " ignore warnings
+" E501 = max line length warning
+" E231 = whitespace after ',' warning
+" W391 = blank line at EOF warnings
+nmap <leader>la :PymodeLintAuto<CR>:PymodeLint<CR>
+" PymodeLintAuto autofixes PEP8 errors
+
+function MyCustomHighlights()
+    hi semshiGlobal      ctermfg=red guifg=#ff0000
+    hi semshiLocal           ctermfg=209 guifg=#ff875f
+    hi semshiGlobal          ctermfg=214 guifg=#ffaf00
+    hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
+    hi semshiParameter       ctermfg=75  guifg=#5fafff
+    hi semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
+    hi semshiFree            ctermfg=218 guifg=#ffafd7
+    hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
+    hi semshiAttribute       ctermfg=49  guifg=#00ffaf
+    hi semshiSelf            ctermfg=249 guifg=#b2b2b2
+    hi semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
+    hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
+
+    hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+    hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+    sign define semshiError text=E> texthl=semshiErrorSign
+endfunction
+autocmd FileType python call MyCustomHighlights()
+autocmd ColorScheme * call MyCustomHighlights()
+"""""""""""""NVIM-END""""""""""""""""
+
 
 
 #[m6] UPDATE PLUGINS AND INSTALL CTAGS FOR TAGLIST
@@ -397,6 +483,64 @@ function repo_automake_func()
 p3install --user p2j
 # p2j convert python file to ipynb jupyter notebook
 
-#[m21] install ngrok
+#[m22] install ngrok
 snap install ngrok
 # ngrok enable you to connect other network without modify network preferences such as port forwarding
+# https://dashboard.ngrok.com/get-started
+# https://medium.com/@byteshiva/ssh-into-remote-linux-by-using-ngrok-b8c49b8dc3ca
+
+#[m23] install NVIM #reference: https://blog2.lucent.me/vim/neovim
+# https://github.com/neovim/neovim/wiki/Installing-Neovim
+# usage: nvim source_code.py
+
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
+# nvim need system clipboard connection. check :healthcheck
+sudo apt-get install -y xsel
+
+# 이건 :h nvim-from-vim 을 입력하면 확인할 수 있다.
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+ln -s ~/.vim $XDG_CONFIG_HOME/nvim
+ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
+# 을 하면 별다른 이상 없이 Neovim에서 Vim의 설정을 대부분 그대로 이용할 수 있다. 내 경우는 Syntastic, YouCompleteMe를 비롯한 플러그인들이 모두 그대로 작동하는것을 확인할 수 있었다. 뭐 여기에 대해서 더 궁금한게 있다면 :h nvim-from-vim를 입력해서 읽어보자.
+# NeoVim은 버퍼로 터미널을 쓸 수 있다. :bel sp 50 | resize 10 | terminal (*terminal은 term으로 줄여 써도 된다)을 입력하면 짠~
+
+# There are terminal buffer in NVIM!! 
+# reference: https://github.com/johngrib/simple_vim_guide
+# below codes help navigating terminal buffer
+# add below codes to ~/.vimrc
+if has('nvim')
+    :tnoremap <A-h> <C-\><C-n><C-w>h
+    :tnoremap <A-j> <C-\><C-n><C-w>j
+    :tnoremap <A-k> <C-\><C-n><C-w>k
+    :tnoremap <A-l> <C-\><C-n><C-w>l
+endif
+:nnoremap <A-h> <C-w>h
+:nnoremap <A-j> <C-w>j
+:nnoremap <A-k> <C-w>k
+:nnoremap <A-l> <C-w>l
+
+# install terminal buffer plugin
+# reference: https://github.com/kassio/neoterm
+Plug 'kassio/neoterm'
+# use :T
+
+
+#[m23] install python-mode #reference: https://blog2.lucent.me/vim/neovim
+# add in vim-plug part below lines
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+#Python-mode는 파이썬을 이용할 때에 있었으면~ 싶은, 아쉬웠던 기능들을 모아둔 플러그인이다. Autocompletion, Syntax Highlighting, Refactoring, Go To Definition, Flake8 Check 등등..
+#이 플러그인은 정말 NeoVim과 잘 맞는다. Vim을 쓸 때에는 pyenv와 pyenv-virtualenv 를 이용하면서 Python의 환경을 바꿀때마다 버전과 설치된 패키지가 다름에도 불구하고 제대로 반영되지 않는 경우(e.g. 컴파일시에 사용한 Python 버전으로만 동작)가 많았는데, NeoVim을 쓰면 각 환경에서 pip install neovim만 해 두면 인식된(활성화된) 환경의 Python을 이용하게 되어 굉장히 편리하다.
+
+
+#[m23] install Semshi for fancy highlighting #reference: https://github.com/numirias/semshi
+# Semshi provides semantic highlighting for Python in Neovim.
+# You need Neovim with Python 3 support (:echo has("python3")). To install the Python provider run below code
+pip3 install pynvim --upgrade 
+# Add numirias/semshi via your plugin manager. If you're using vim-plug, add below line into ~/.config/nvim/init.vim
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
+
+
