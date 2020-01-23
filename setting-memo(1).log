@@ -477,7 +477,19 @@ function repo_automake_func()
     echo "[Info] Pushing local repository master branch to Github origin/master branch..."
     git push -u origin master
 }
+# ################################ By KHJ
+
+#for cuda 10.0
+
+# Nvidia Driver: https://codechacha.com/ko/install-nvidia-driver-ubuntu/
+# Tensorflow GPU1: http://blog.naver.com/PostView.nhn?blogId=schmacher&logNo=221383173685&parentCategoryNo=&categoryNo=44&viewDate=&isShowPopularPosts=true&from=search
+# Tensorflow GPU2: https://red-pulse.tistory.com/226
+export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}
+#export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64
+
 ################################
+
 
 #[m21] install p2j 
 p3install --user p2j
@@ -521,11 +533,6 @@ endif
 :nnoremap <A-j> <C-w>j
 :nnoremap <A-k> <C-w>k
 :nnoremap <A-l> <C-w>l
-
-# install terminal buffer plugin
-# reference: https://github.com/kassio/neoterm
-Plug 'kassio/neoterm'
-# use :T
 
 
 #[m23] install python-mode #reference: https://blog2.lucent.me/vim/neovim
