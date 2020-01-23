@@ -99,6 +99,7 @@ autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
 autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 "autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 " Below are my custom command
 set shell=/usr/bin/zsh
@@ -210,6 +211,12 @@ set background=dark
 "set background=light
 colorscheme badwolf
 
+" Help us dealing with annoying swap file
+" reference: https://www.vim.org/scripts/script.php?script_id=4923
+set title titlestring=
+let g:autoswap_detect_tmux = 1
+
+
 " for NVIM
 """""""""""""NVIM""""""""""""""""
 set mouse=c " disable mouse
@@ -317,39 +324,61 @@ spd-say done
 
 #[m8] UPDATE ~/.config/terminator/config file AS BELOW  (You can Ignore this)
 [global_config]
+  always_split_with_profile = True
   enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
-  inactive_color_offset = 0.89
+  geometry_hinting = True
+  handle_size = 0
+  inactive_color_offset = 0.656976744186
+  title_font = D2Coding 11
+  title_hide_sizetext = True
   title_inactive_bg_color = "#111314"
   title_inactive_fg_color = "#b7bbb7"
   title_receive_bg_color = "#5d7f90"
   title_receive_fg_color = "#b7bbb7"
   title_transmit_bg_color = "#111314"
   title_transmit_fg_color = "#b7bbb7"
+  title_use_system_font = False
 [keybindings]
+  broadcast_all = None
+  broadcast_group = None
+  group_all = None
+  group_all_toggle = <Super>g
+  help = None
+  layout_launcher = None
 [layouts]
   [[default]]
-    [[[child1]]]
-      parent = window0
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 9336ed1b-ba39-4246-a2b1-b85e5c50a9c3
+      last_active_window = True
+      maximised = False
+      order = 0
+      parent = ""
+      position = 1280:32
+      size = 1280, 1018
+      title = KHJ's Terminator :)
+      type = Window
+    [[[terminal1]]]
+      order = 0
+      parent = child0
       profile = default
       type = Terminal
-    [[[window0]]]
-      parent = ""
-      type = Window
+      uuid = 9336ed1b-ba39-4246-a2b1-b85e5c50a9c3
 [plugins]
 [profiles]
   [[default]]
     active_encodings = ANSI_X3.4-1968, UTF-8, ISO-8859-1
-    background_color = "#282828"
-    background_darkness = 0.94
+    background_darkness = 0.8
     background_type = transparent
     cursor_color = "#7b7b7b"
     font = D2Coding 12
-    foreground_color = "#ebdbb2"
+    foreground_color = "#00ff00"
     login_shell = True
-    palette = "#282828:#cc241d:#98971a:#d79921:#458588:#b16286:#689d6a:#a89984:#928374:#fb4934:#b8bb26:#fabd2f:#83a598:#d3869b:#8ec07c:#ebdbb2"
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
     scrollback_lines = 5000
     urgent_bell = True
     use_system_font = False
+
 
 #[m9] install vim-plug plugin manager
 
@@ -416,7 +445,7 @@ https://github.com/lambdalisue/jupyter-vim-binding
 https://github.com/lambdalisue/jupyter-vim-binding/issues/92 #fix white bg issue
 
 #[m19] Vim - Jupyter Integration Plugin : vimpyter
-https://github.com/szymonmaszke/vimpyter (you've also installed this)
+https://github.com/szymonmaszke/vimpyter (you've also installed this in [m5])
 pip3 install notedown
 notedown --version
 
@@ -549,5 +578,11 @@ pip3 install pynvim --upgrade
 # Add numirias/semshi via your plugin manager. If you're using vim-plug, add below line into ~/.config/nvim/init.vim
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
+#[m24] dealing with annoying swap files
+# reference: https://www.vim.org/scripts/script.php?script_id=4923
+cd ~/.vim/bundle
+git clone https://github.com/gioele/vim-autoswap.git
+sudo apt install wmctrl
+# echo 'set title titlestring=' >> ~/.vimrc (Already in ~/.vimrc [m5] section.)
 
 
