@@ -413,6 +413,12 @@ sudo apt install system76-pop-icon-theme -y
 sudo apt install pop-icon-theme -y
 sudo add-apt-repository -r ppa:noobslab/icons -y
 sudo add-apt-repository -r ppa:system76/pop -y
+# pop-slim-dark theme: https://drive.google.com/file/d/13mdiRZD8YNExmfb0EhQOvcY3X11Lfate/view
+# move the tar file to /usr/share/themes
+cd ~/다운로드
+tar -xvf PopSLIM-themes.tar.xz
+sudo mv PopSLIM-themes/* /usr/share/themes
+rm -rf PopSLIM-themes*
 spd-say done
 
 #[m11] touchpad inactivate
@@ -635,3 +641,4 @@ AVAHI_DAEMON_DETECT_LOCAL=0
 #[m28] change swap files 
 cd ~/.local
 chown -R $USER:$USER ~/.local/share/nvim/swap
+
