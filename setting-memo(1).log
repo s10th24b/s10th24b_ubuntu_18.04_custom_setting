@@ -124,6 +124,9 @@ filetype off                  " required
  
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+" Since Ubuntu 19.10, the way how sudo handles $HOME got different, so stop using ~ in .vimrc
+" Reference: https://askubuntu.com/questions/1186999/how-does-sudo-handle-home-differently-since-19-10?noredirect=1
+" if you want to sudo command preserving old home directory, sudo --preserve-env=HOME
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -273,7 +276,7 @@ let g:pymode_lint_ignore=['E501', 'E261', 'E231', 'E116', 'W'] " ignore warnings
 nmap <leader>la :PymodeLintAuto<CR>:PymodeLint<CR>
 " PymodeLintAuto autofixes PEP8 errors
 
-function MyCustomHighlights()
+function! MyCustomHighlights()
     hi semshiGlobal      ctermfg=red guifg=#ff0000
     hi semshiLocal           ctermfg=209 guifg=#ff875f
     hi semshiGlobal          ctermfg=214 guifg=#ffaf00
@@ -390,9 +393,9 @@ sudo vim and :PlugInstall #in vim
 #:IndentGuidesToggle can toggle the setting.
 
 #[m10] tweak-tool and numix-icon
-sudo apt-get install gnome-tweak-tool -y
+sudo apt install gnome-tweak-tool gnome-shell-extensions -y
 sudo add-apt-repository ppa:numix/ppa
-sudo apt-get install numix-icon-theme-circle -y
+sudo apt install numix-icon-theme-circle -y
 sudo add-apt-repository ppa:system76/pop sudo apt update
 sudo apt install pop-theme 
 # install this extension via firefox or ubuntu software center from https://extensions.gnome.org/extension/19/user-themes
@@ -419,7 +422,8 @@ spd-say done
 #[m14] YouCompleteMe settings
 sudo apt-get install build-essential python3-dev -y
 cd ~/.vim/bundle/YouCompleteMe
-sudo python3 install.py --clangd-completer --java-completer
+sudo python3 install.py --clangd-completer --java-completer 
+# sudo python3 install.py --all
 spd-say done
 
 #[m15] Nouveau.modeset=0 settings
@@ -429,7 +433,7 @@ sudo update-grub
 spd-say done
 
 
-#[m16] YouCompleteMe settings
+#[m16] Install Workspace Matrix
 #Reboot and open software center and install Workspace Matrix
 
 #[m17] Install Jupyter
@@ -540,6 +544,7 @@ sudo apt-get update
 sudo apt-get install neovim
 # nvim need system clipboard connection. check :healthcheck
 sudo apt-get install -y xsel
+pip3 install --user pynvim
 
 # 이건 :h nvim-from-vim 을 입력하면 확인할 수 있다.
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
@@ -578,11 +583,13 @@ pip3 install pynvim --upgrade
 # Add numirias/semshi via your plugin manager. If you're using vim-plug, add below line into ~/.config/nvim/init.vim
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
-#[m24] dealing with annoying swap files
-# reference: https://www.vim.org/scripts/script.php?script_id=4923
-cd ~/.vim/bundle
-git clone https://github.com/gioele/vim-autoswap.git
-sudo apt install wmctrl
-# echo 'set title titlestring=' >> ~/.vimrc (Already in ~/.vimrc [m5] section.)
-
-
+#[m24] Install D2Coding font (highly efficient in coding)
+mkdir -p ~/d2coding
+cd ~/d2coding
+git clone https://github.com/naver/d2codingfont
+cd d2codingfont
+unzip D2Coding-Ver1.3.2*
+cd D2CodingAll
+gnome-font-viewer D2Coding*.ttc
+cd ~
+rm -rf ~/d2coding
