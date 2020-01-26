@@ -24,8 +24,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-alias install="sudo apt-get install"
-alias updnupg="sudo apt-get update && sudo apt-get upgrade"
+alias install="sudo apt install"
+alias remove="sudo apt remove"
+alias updnupg="sudo apt update && sudo apt upgrade"
 alias py="python3"
 
 
@@ -407,8 +408,9 @@ sudo apt install numix-icon-theme-circle -y
 sudo add-apt-repository ppa:system76/pop -y
 sudo add-apt-repository ppa:noobslab/icons -y
 sudo apt update
-sudo apt install pop-theme
+sudo apt install pop-theme -y
 sudo apt install system76-pop-icon-theme -y
+sudo apt install pop-icon-theme -y
 sudo add-apt-repository -r ppa:noobslab/icons -y
 sudo add-apt-repository -r ppa:system76/pop -y
 spd-say done
