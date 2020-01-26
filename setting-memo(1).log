@@ -540,9 +540,11 @@ function repo_automake_func()
 # Nvidia Driver: https://codechacha.com/ko/install-nvidia-driver-ubuntu/
 # Tensorflow GPU1: http://blog.naver.com/PostView.nhn?blogId=schmacher&logNo=221383173685&parentCategoryNo=&categoryNo=44&viewDate=&isShowPopularPosts=true&from=search
 # Tensorflow GPU2: https://red-pulse.tistory.com/226
+# use sudo bash cuda_10.0...... --override option for ubuntu 19.10 or unsupported configurtion case.
 export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}
 #export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64
+pip3 install --user "numpy<1.17"
 
 ################################
 
