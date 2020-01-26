@@ -127,6 +127,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " Since Ubuntu 19.10, the way how sudo handles $HOME got different, so stop using ~ in .vimrc
 " Reference: https://askubuntu.com/questions/1186999/how-does-sudo-handle-home-differently-since-19-10?noredirect=1
 " if you want to sudo command preserving old home directory, sudo --preserve-env=HOME
+" use sudonvim as your custom alias of sudo --preserve-env=HOME nvim
+" use sudovim as your custom alias of sudo --preserve-env=HOME vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -384,7 +386,6 @@ spd-say done
 
 
 #[m9] install vim-plug plugin manager
-
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
@@ -396,9 +397,15 @@ sudo vim and :PlugInstall #in vim
 sudo apt install gnome-tweak-tool gnome-shell-extensions -y
 sudo add-apt-repository ppa:numix/ppa
 sudo apt install numix-icon-theme-circle -y
-sudo add-apt-repository ppa:system76/pop sudo apt update
-sudo apt install pop-theme 
+
 # install this extension via firefox or ubuntu software center from https://extensions.gnome.org/extension/19/user-themes
+sudo add-apt-repository ppa:system76/pop -y
+sudo add-apt-repository ppa:noobslab/icons -y
+sudo apt update
+sudo apt install pop-theme
+sudo apt install system76-pop-icon-theme -y
+sudo add-apt-repository -r ppa:noobslab/icons -y
+sudo add-apt-repository -r ppa:system76/pop -y
 spd-say done
 
 #[m11] touchpad inactivate
@@ -456,6 +463,7 @@ notedown --version
 #[m20] paste below lines to tail of .zshrc file
 ###############################
 alias install="sudo apt-get install"
+alias remove="sudo apt-get remove"
 alias updnupg="sudo apt-get update && sudo apt-get upgrade"
 alias py="python3"
 alias kt="kotlin"
@@ -593,3 +601,6 @@ cd D2CodingAll
 gnome-font-viewer D2Coding*.ttc
 cd ~
 rm -rf ~/d2coding
+
+#[m25] Install UIM for Korean Input in chrome or something
+# currently, ibus is default input method, and showing a few problems in chrome or other applications.
