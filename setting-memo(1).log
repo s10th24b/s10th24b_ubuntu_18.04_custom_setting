@@ -2,7 +2,7 @@
 
 #[0] BASIC UPGRADE
 sudo apt-get update && sudo apt-get upgrade -y 
-sudo apt-get install gcc g++ openjdk-8-jdk vim terminator -y
+sudo apt-get install gcc g++ openjdk-8-jdk vim terminator net-tools finger -y
 sudo apt-get install vim-gnome -y
 spd-say done
 #[1] INSTALL ZSH and oh-my-zsh
@@ -20,6 +20,7 @@ git
 zsh-syntax-highlighting
 zsh-autosuggestions
 )
+export XDG_CONFIG_HOME="$HOME/.config"
 
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -462,15 +463,15 @@ notedown --version
 
 #[m20] paste below lines to tail of .zshrc file
 ###############################
-alias install="sudo apt-get install"
-alias remove="sudo apt-get remove"
-alias updnupg="sudo apt-get update && sudo apt-get upgrade"
-alias py="python3"
 alias kt="kotlin"
 alias saydone="spd-say -t female1 'jobs done'"
 alias ua="sudo ufw allow"
 alias uaf="sudo ufw allow from"
 alias p3install="pip3 install --user"
+alias vi="nvim"
+alias sudovi="sudo --preserve-env=HOME nvim"
+alias sudovim="sudo --preserve-env=HOME vim"
+
 #function py_to_ipynb()
 #{ 
     #local my_file=`basename "$1"` # get full name of argument and strip the path
@@ -602,5 +603,21 @@ gnome-font-viewer D2Coding*.ttc
 cd ~
 rm -rf ~/d2coding
 
-#[m25] Install UIM for Korean Input in chrome or something
-# currently, ibus is default input method, and showing a few problems in chrome or other applications.
+#[m25] open im-config for input method
+# you can choose auto setting (= ibus)
+
+
+#[m26] How to Change the Ubuntu Login screen
+# https://askubuntu.com/questions/1135694/ubuntu-19-04-cant-change-lockscreen-background
+# https://github.com/PRATAP-KUMAR/login_lock_screen_bg_change
+
+
+#[m27] Avahi-daemon disable
+ sudo vi /etc/default/avahi-daemon
+AVAHI_DAEMON_DETECT_LOCAL=0
+sudo vi /usr/lib/avahi/avahi-daemon-check-dns.sh 
+AVAHI_DAEMON_DETECT_LOCAL=0
+
+#[m28] change swap files 
+cd ~/.local
+chown -R $USER:$USER ~/.local/share/nvim/swap
