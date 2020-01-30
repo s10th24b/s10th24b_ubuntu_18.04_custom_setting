@@ -644,3 +644,17 @@ AVAHI_DAEMON_DETECT_LOCAL=0
 cd ~/.local
 chown -R $USER:$USER ~/.local/share/nvim/swap
 
+#[m29] install "Fuck" that corrects
+sudo apt update
+sudo apt install python3-dev python3-pip python3-setuptools -y
+sudo pip3 install thefuck -y
+
+# It is recommended that you place this command in your .bash_profile, .bashrc, .zshrc or other startup script:
+eval $(thefuck --alias)
+# You can use whatever you want as an alias, like for Mondays:
+eval $(thefuck --alias FUCK)
+Reference: https://github.com/nvbn/thefuck
+
+
+#[m30] install slack-term
+# https://github.com/erroneousboat/slack-term
