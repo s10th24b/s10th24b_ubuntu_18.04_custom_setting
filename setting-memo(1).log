@@ -466,9 +466,17 @@ pip3 install --user nbconvert
 
 
 #[m18] Jupyter-vim-binding extension download
-https://github.com/ipython-contrib/jupyter_contrib_nbextensions#installation
+#https://github.com/ipython-contrib/jupyter_contrib_nbextensions#installation
 https://github.com/lambdalisue/jupyter-vim-binding
 https://github.com/lambdalisue/jupyter-vim-binding/issues/92 #fix white bg issue
+
+# Create required directory in case (optional)
+mkdir -p $(jupyter --data-dir)/nbextensions
+# Clone the repository
+cd $(jupyter --data-dir)/nbextensions
+git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+# Activate the extension
+jupyter nbextension enable vim_binding/vim_binding
 
 #[m19] Vim - Jupyter Integration Plugin : vimpyter
 https://github.com/szymonmaszke/vimpyter (you've also installed this in [m5])
