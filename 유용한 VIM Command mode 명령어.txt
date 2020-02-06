@@ -2,6 +2,30 @@
 `` : 직전 커서 위치로 이동
 `" : 현재 파일을 이전에 닫았을 때 마지막으로 작업하던 커서 위치로 이동
 :r fileName : fileName의 내용을 현재 커서위치에 붙여넣음
+ma를 했다면
+`a는 정확한 마크위치로 이동
+'a는 마크위치 줄의 맨 처음으로 이동
+
+https://nolboo.kim/blog/2016/10/13/vim-text-objects-definitive-guide/
+그냥 dw,cw 하면 현재커서에서 단어끝까지 지우나,
+diw, daw를 하면 단어 자체를 지워준다.(응용하면 yiw도 된다!)
+vim에서는 일반텍스트의 세 가지 빌딩블록을 제공한다. 단어, 문장, 문단.
+단어: iw: inner단어(뒤따르는 whitespace 포함안함), aw: 한 단어(뒤따르는 여백 포함)
+a는 뒷여백포함, i는 개체만.
+문장: as: 한 문장 is: inner 문장
+문단: ap 한 문단 ip: inner 문단
+a" i" a' i' a` i` 등등도 유용하다.
+a) = ab, i) = ib
+a] , i], a}, i}, at, it(tag block <>)
+a>, i> (single tag)
+
+커서에 위치한 숫자를 Ctrl-a 로 증가시키거나, Ctrl-x로 감소시킬 수 있다.
+10 Ctrl+a 하면 10늘어남
+
+입력모드에서 Ctrl-o 를하고 zz를 하면 맥락끊김없이 작업가능
+
+:browse old = :bro ol
+
 
 m[A-Z] : m[a-z0-9]는 현재 버퍼내에서만 이동하나, 대문자 버전은 전체영역에서 마킹하므로, 다른파일로도 이동가능.
 커서가 위치한 함수의 정의 보러가기: gd, g*
