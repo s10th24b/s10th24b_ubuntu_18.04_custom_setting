@@ -565,8 +565,8 @@ function repo_automake_func()
       repo_name=$dir_name
     fi
 # Enther github account info.
-    local GITHUB_USERNAME="s10th24b" 
-    local GITHUB_EMAIL="allen246@naver.com" 
+    local GITHUB_USERNAME="" 
+    local GITHUB_EMAIL="" 
     git config --global user.name "${GITHUB_USERNAME}" 
     git config --global user.email "${GITHUB_EMAIL}" 
     git config --global credential.helper cache 
@@ -703,7 +703,7 @@ sudo pip3 install thefuck -y
 eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:
 eval $(thefuck --alias FUCK)
-Reference: https://github.com/nvbn/thefuck
+# Reference: https://github.com/nvbn/thefuck
 
 
 #[m30] install slack-term
