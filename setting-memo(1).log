@@ -45,6 +45,8 @@ set shiftwidth=4
 set expandtab
 set cursorline "highlight current cursor line
 set history=256 "history buffer in .viminfo
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
+
 "set nobackup
 "set paste "paste mode
 "
@@ -118,7 +120,7 @@ set completeopt-=preview
 set shell=/usr/bin/zsh
 autocmd Filetype python nmap <silent><Leader>j :call FunctionPythonToIpynb()<CR>
 function! FunctionPythonToIpynb()
-    !p2j % -o
+    !p2j -o "%:t"
     :vi %:r.ipynb
 endfunction
 " Above are my custom command
@@ -291,7 +293,7 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
 " For CamelCaseMotion
-let g:camelcasemotion_key = '<leader>'
+"let g:camelcasemotion_key = '<leader>'
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
