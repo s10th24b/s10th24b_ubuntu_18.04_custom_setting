@@ -697,7 +697,7 @@ chown -R $USER:$USER ~/.local/share/nvim/swap
 #[m29] install "Fuck" that corrects
 sudo apt update
 sudo apt install python3-dev python3-pip python3-setuptools -y
-sudo pip3 install thefuck -y
+sudo pip3 install thefuck
 
 # It is recommended that you place this command in your .bash_profile, .bashrc, .zshrc or other startup script:
 eval $(thefuck --alias)
