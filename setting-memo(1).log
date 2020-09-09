@@ -472,6 +472,7 @@ spd-say done
 #[m14] YouCompleteMe settings
 sudo apt-get install build-essential python3-dev -y
 cd ~/.vim/bundle/YouCompleteMe
+sudo chmod 777 .
 sudo python3 install.py --clangd-completer --java-completer 
 # sudo python3 install.py --all
 spd-say done
