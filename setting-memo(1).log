@@ -687,4 +687,5 @@ function kt()
     echo "================== Execute Jar ====================="
     echo "====================================================\n"
     java -jar $JAR_NAME
+    rm -r $JAR_NAME # Automatically remove jar file
 }
