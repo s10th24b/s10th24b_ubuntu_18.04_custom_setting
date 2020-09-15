@@ -2,7 +2,7 @@
 
 #[0] BASIC UPGRADE
 sudo apt-get update && sudo apt-get upgrade -y 
-sudo apt-get install gcc g++ openjdk-8-jdk vim terminator net-tools finger -y
+sudo apt-get install gcc g++ openjdk-11-jdk vim terminator net-tools finger -y
 sudo apt-get install vim-gnome -y
 spd-say done
 #[1] INSTALL ZSH and oh-my-zsh
