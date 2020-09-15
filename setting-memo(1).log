@@ -168,6 +168,7 @@ Plugin 'taglist-plus'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
+Plugin 'udalov/kotlin-vim'
 
 Plugin 'scrooloose/nerdcommenter' "<Leader>c<Space> by default
 Plugin 'scrooloose/syntastic'
