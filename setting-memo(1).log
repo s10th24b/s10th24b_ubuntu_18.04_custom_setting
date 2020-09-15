@@ -656,3 +656,35 @@ eval $(thefuck --alias FUCK)
 
 #[m30] install slack-term
 # https://github.com/erroneousboat/slack-term
+
+#[m31] My Custom Kotlin Compile and Run Function. Paste below code to ~/.zshrc
+function kt()
+{
+    local JAR_NAME=""
+    echo "\n===================================================="
+    echo "================== Making Jar ====================="
+    echo "====================================================\n"
+    if [ "$2" != "" ]; then # If second parameter exists
+        #echo $2
+        if [[ $2 == *".jar"* ]]; then # If second parameter contains .jar extensions
+            kotlinc $1 -include-runtime -d $2
+            JAR_NAME=$2
+        else  # If second parameter doesn't contains .jar extensions
+            kotlinc $1 -include-runtime -d $2.jar
+            JAR_NAME="$2.jar"
+        fi
+    else # If second parameter not exists, automatically make .jar file with same filename not have .kt extensions
+        #echo "second param not exist"
+        local FILENAME_WITH_FORMAT=$1
+        #echo " FILENAME_WITH_FORMAT: ${FILENAME_WITH_FORMAT}"
+        local FILENAME_WITHOUT_FORMAT=${FILENAME_WITH_FORMAT%%.*}
+        #local FILENAME_WITHOUT_FORMAT=$1 | cut -f 1 -d '.'
+        #echo " FILENAME_WITHOUT_FORMAT: ${FILENAME_WITHOUT_FORMAT}"
+        kotlinc $1 -include-runtime -d $FILENAME_WITHOUT_FORMAT.jar
+        JAR_NAME="$FILENAME_WITHOUT_FORMAT.jar"
+    fi
+    echo "\n===================================================="
+    echo "================== Execute Jar ====================="
+    echo "====================================================\n"
+    java -jar $JAR_NAME
+}
