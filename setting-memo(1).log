@@ -171,6 +171,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'udalov/kotlin-vim'
 
 Plugin 'scrooloose/nerdcommenter' "<Leader>c<Space> by default
+Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'itchyny/calendar.vim'
